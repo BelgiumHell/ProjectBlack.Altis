@@ -1,0 +1,38 @@
+author = "Jochem";
+OnLoadName = "Project Black";
+OnLoadMission = "A mission inspired by carrier ops and patrol ops. The goal is to capture Chernarus and complete random side objectives as you do so.";
+respawn = 3;
+respawndelay = 5;
+respawnOnStart = -1;
+respawnVehicleDelay = 0;
+disabledAI = true;
+enableDebugConsole = 1;
+wreckManagerMode = 0;
+
+#include "Zen_FrameworkFunctions\Zen_LoadoutFunctions\Zen_LoadoutDialog.hpp"
+#include "CHVD\dialog.hpp"
+
+
+class CfgNotifications {
+    #include "Zen_FrameworkFunctions\Zen_TaskSystem\Zen_TaskNotifications.hpp"
+};
+
+class CfgCommunicationMenu {
+    #include "Zen_FrameworkFunctions\Zen_FireSupportSystem\Zen_FireSupportMenu.hpp"
+};
+
+class Header
+{
+	gameType = Coop; // MP misison type
+	minPlayers = 1; //min # of players the mission supports
+	maxPlayers = 50; //max # of players the mission supports
+};
+
+class CfgFunctions 
+{
+    #include "Functions\Misc\LVR\functions\functions.hpp"
+	#include "CHVD\CfgFunctions.hpp"
+	class gdsn {
+		#include "Functions\AI\rooftopStaticWeapons\functions.hpp"
+	};
+}; 
