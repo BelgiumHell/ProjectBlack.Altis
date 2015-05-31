@@ -44,19 +44,6 @@ while{_x < _carCount} do{
 
 _x = 0;
 
-//APC
-while{_x < _lightCount} do{
-	_locationS = [_location, random _size, random _size] call BIS_fnc_relPos;
-	_locationS = [_locationS,0,0,1,[1,400]] call Zen_FindGroundPosition;
-	_veh = [_locationS,(apcPool call BIS_fnc_selectRandom)] call Zen_SpawnVehicle;
-	[_veh,east] call Zen_SpawnVehicleCrew;
-	[_groups, count _groups, group(crew _veh select 0)] call Zen_ArrayInsert;
-	[_vehicles, count _vehicles, _veh] call Zen_ArrayInsert;
-	_x = _x + 1;
-};
-
-_x = 0;
-
 //IFV
 while{_x < _lightCount} do{
 	_locationS = [_location, random _size, random _size] call BIS_fnc_relPos;
@@ -91,36 +78,16 @@ _trgC setTriggerArea [_size,_size,_size,false];
 _trgC setTriggerActivation ["EAST","PRESENT", false];
 _trgC setTriggerStatements ["this","",""];
 
+Sleep 10;
+
 waitUntil{(count list _trgD < 1) or (count list _trgC < 1)};
 
 if((count list _trgD) < 1)then{
-	[_groups,_vehicles] execVM "Functions\Misc\clean.sqf";
-	
-	//Respawn activation trigger
-	if(_infantryCount == 8)then{
-		_trg = createTrigger ["EmptyDetector",_location,true];
-		_trg setTriggerArea [900,900,900,false];
-		_trg setTriggerActivation ["WEST","PRESENT", false];
-		_trg setTriggerStatements ["this","[getPos thisTrigger,400,8,2,2,0,0]execVM ""Functions\Core\spawnZone.sqf""",""];
-	};
-	
-	if(_infantryCount == 4)then{
-		_trg = createTrigger ["EmptyDetector",_location,true];
-		_trg setTriggerArea [700,700,700,false];
-		_trg setTriggerActivation ["WEST","PRESENT", false];
-		_trg setTriggerStatements ["this","[getPos thisTrigger,200,4,2,0,0,0]execVM ""Functions\Core\spawnZone.sqf""",""];
-	};
-	
-	if(_infantryCount == 12)then{
-		_trg = createTrigger ["EmptyDetector",_location,true];
-		_trg setTriggerArea [1200,1200,1200,false];
-		_trg setTriggerActivation ["WEST","PRESENT", false];
-		_trg setTriggerStatements ["this","[getPos thisTrigger,700,12,4,2,2,0]execVM ""Functions\Core\spawnZone.sqf""",""];
-	};
+	[_location] execVM "Functions\Misc\cache.sqf";
 };
 if((count list _trgC) < 2)then{
 	hint "occupied";
 	_town = nearestLocations [_location, ["NameCityCapital","NameCity","NameVillage"], 100];
-	_nameM = text (_town select 0)
+	_nameM = text (_town select 0);
 	deleteMarker _nameM;
 };

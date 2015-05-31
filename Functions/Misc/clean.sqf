@@ -9,6 +9,8 @@ _y = 0;
 _groupCount = (count _groupsT);
 _vehCount = (count _veh);
 
+vehTest = _veh;
+
 //Groups
 while{_groupCount > _x}do{
 	_groupT = _groupsT select _x;

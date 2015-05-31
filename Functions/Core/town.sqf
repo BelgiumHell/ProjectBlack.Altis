@@ -12,7 +12,7 @@ villages = nearestLocations [getPosATL player, ["NameVillage"], 25000];
 
 while{_ok == 0}do{
 	targetTown = villages select (floor (random (count villages)));
-	if(count towns > count occupiedTowns)then{targetTown = towns select (floor (random (count towns)));};
+	if((count towns + 1) > count occupiedTowns)then{targetTown = towns select ((count occupiedTowns) - 1);};
 	if(!(capitalName in occupiedTowns))then{targetTown = (capital select 0);};
 	townName = text targetTown;
 	if (!(townName in occupiedTowns))then{_ok = 1; [occupiedTowns,count occupiedTowns,townName] call Zen_ArrayInsert;};
@@ -35,6 +35,8 @@ if(_place in towns)then{
 	_name setMarkerSize [550,550];
 	_name setMarkerBrush "DiagGrid";
 	_name setMarkerColor "ColorOPFOR";
+	
+	[townMarkers,count townMarkers,_name] call Zen_ArrayInsert;
 };
 
 if(_place in villages)then{
@@ -52,6 +54,8 @@ if(_place in villages)then{
 	_name setMarkerSize [300,300];
 	_name setMarkerBrush "DiagGrid";
 	_name setMarkerColor "ColorOPFOR";
+	
+	[townMarkers,count townMarkers,_name] call Zen_ArrayInsert;
 };
 
 if(_place in capital)then{
@@ -69,4 +73,6 @@ if(_place in capital)then{
 	_name setMarkerSize [700,700];
 	_name setMarkerBrush "DiagGrid";
 	_name setMarkerColor "ColorOPFOR";
+	
+	[townMarkers,count townMarkers,_name] call Zen_ArrayInsert;
 };
