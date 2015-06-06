@@ -4,16 +4,16 @@
 _ok = 0;
 
 //Get location of town
-capital = nearestLocations [getPosATL player, ["NameCityCapital"], 25000];
-capitalName = text (capital select 0);
+capitals = nearestLocations [getPosATL player, ["NameCityCapital"], 25000];
+capitalName = "Pyrgos";
 towns = nearestLocations [getPosATL player, ["NameCity"], 25000];
 villages = nearestLocations [getPosATL player, ["NameVillage"], 25000];
 
 
 while{_ok == 0}do{
 	targetTown = villages select (floor (random (count villages)));
-	if((count towns + 1) > count occupiedTowns)then{targetTown = towns select ((count occupiedTowns) - 1);};
-	if(!(capitalName in occupiedTowns))then{targetTown = (capital select 0);};
+	if((count towns + count capitals) > count occupiedTowns)then{targetTown = towns select ((count occupiedTowns) - count capitals);};
+	if((count capitals) >= count occupiedTowns)then{targetTown = capitals select (count occupiedTowns);};
 	townName = text targetTown;
 	if (!(townName in occupiedTowns))then{_ok = 1; [occupiedTowns,count occupiedTowns,townName] call Zen_ArrayInsert;};
 	Sleep 1;
@@ -58,7 +58,7 @@ if(_place in villages)then{
 	[townMarkers,count townMarkers,_name] call Zen_ArrayInsert;
 };
 
-if(_place in capital)then{
+if(_place in capitals)then{
 	_location = position (_place);
 	_name = townName;
 	

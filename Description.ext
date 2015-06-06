@@ -1,6 +1,6 @@
 author = "Jochem";
 OnLoadName = "Project Black";
-OnLoadMission = "A mission inspired by carrier ops and patrol ops. The goal is to capture Chernarus and complete random side objectives as you do so.";
+OnLoadMission = "A mission inspired by carrier ops and patrol ops. The goal is to capture Altis and complete random side objectives as you do so.";
 respawn = 3;
 respawndelay = 5;
 respawnOnStart = -1;
@@ -11,6 +11,7 @@ wreckManagerMode = 0;
 
 #include "Zen_FrameworkFunctions\Zen_LoadoutFunctions\Zen_LoadoutDialog.hpp"
 #include "CHVD\dialog.hpp"
+#include "R3F_LOG\desc_include.h"
 
 
 class CfgNotifications {
@@ -30,7 +31,6 @@ class Header
 
 class CfgFunctions 
 {
-    #include "Functions\Misc\LVR\functions\functions.hpp"
 	#include "CHVD\CfgFunctions.hpp"
 	class gdsn {
 		#include "Functions\AI\rooftopStaticWeapons\functions.hpp"

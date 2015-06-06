@@ -8,6 +8,7 @@
 // Version = 0.1a
 // Tested with ArmA 3 <version number>
 
+execVM "R3F_LOG\init.sqf";
 enableSaving [false, false];
 
 // All clients stop executing here, do not delete this line

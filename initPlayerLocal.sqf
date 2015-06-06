@@ -1,0 +1,1 @@
+//player addEventHandler ["killed", {[_this select 0] execVM "Functions\Misc\player_respawn.sqf"}];

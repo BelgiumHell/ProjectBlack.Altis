@@ -78,6 +78,13 @@ _trgC setTriggerArea [_size,_size,_size,false];
 _trgC setTriggerActivation ["EAST","PRESENT", false];
 _trgC setTriggerStatements ["this","",""];
 
+if(_infantryCount > 5)then{
+	_trgR = createTrigger ["EmptyDetector",_location];
+	_trgR setTriggerArea [_size,_size,_size,false];
+	_trgR setTriggerActivation ["EAST","PRESENT", false];
+	_trgR setTriggerStatements ["list thisTrigger < 40","[getPos thisTrigger]execVM ""Functions\AI\reinforce.sqf"";",""];
+};
+
 Sleep 10;
 
 waitUntil{(count list _trgD < 1) or (count list _trgC < 1)};

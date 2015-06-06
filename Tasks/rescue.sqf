@@ -47,30 +47,8 @@ doStop CIV;
 commandStop CIV;
 CIV switchMove "AmovPercMstpSsurWnonDnon";
 
-
 //Spawn enemy
-_groupCount = 5;
-
 [_locationHostage, east, "sof", 4,"SF"] call Zen_SpawnInfantryGarrison;
-
-while{_x < _groupCount} do{
-	_locationS = [_location, random 300, random 300] call BIS_fnc_relPos;
-	_locationS = [_locationS,1,1] call Zen_ExtendPosition;
-	_group = [_locationS,east, "sof", 4,"SF"] call Zen_SpawnInfantry;
-	[_group,_location,[0,200],[0,360],"limited","safe"] spawn Zen_OrderInfantryPatrol;
-	_x = _x + 1;
-};
-
-_x = 0;
-
-while{_x < _groupCount} do{
-	_locationS = [_location, random 300, random 300] call BIS_fnc_relPos;
-	_locationS = [_locationS,1,1] call Zen_ExtendPosition;
-	_group = [_locationS,east, "infantry", 2,"Basic"] call Zen_SpawnInfantryGarrison;
-	_x = _x + 1;
-};
-
-
 
 //Spawn dropoff trigger
 _trgdrop = createTrigger ["EmptyDetector",_missionDropoffzone];

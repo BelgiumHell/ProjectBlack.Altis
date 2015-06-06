@@ -1,0 +1,1 @@
+player setPosASL getPosASL respawn_obj;

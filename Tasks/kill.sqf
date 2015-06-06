@@ -31,6 +31,8 @@ officer allowFleeing 0;
 
 //Personal protection
 _group = [_locationS, east, "infantry", 3,"basic"] call Zen_SpawnInfantry;
+officer joinSilent _group;
+officer setLeader _group;
 
 
 //Spawn dead trigger

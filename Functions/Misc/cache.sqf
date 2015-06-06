@@ -21,4 +21,4 @@ _list = (list _trg);
 _trg = createTrigger ["EmptyDetector",_location,true];
 _trg setTriggerArea [900,900,900,false];
 _trg setTriggerActivation ["WEST","PRESENT", false];
-_trg setTriggerStatements ["this","[getPos thisTrigger]execVM ""Functions\Misc\activate.sqf""",""];
+_trg setTriggerStatements ["typeOf (thisList select 0) !=""JS_S_FA18X""","[getPos thisTrigger]execVM ""Functions\Misc\activate.sqf""",""];
