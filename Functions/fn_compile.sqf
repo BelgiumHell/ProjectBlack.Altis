@@ -26,6 +26,7 @@ JOC_loadoutMaster = compileFinal preprocessFileLineNumbers "Functions\Loadouts\m
 
 //Logistics
 #include "Logistics\fn_logistics_compile.sqf";
+JOC_crateInit = compileFinal preprocessFileLineNumbers "Functions\Logistics\crateInit.sqf";
 
 //Player
 JOC_playerLoop = compileFinal preprocessFileLineNumbers "Functions\Player\playerLoop.sqf";

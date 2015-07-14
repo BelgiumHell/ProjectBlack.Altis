@@ -33,13 +33,13 @@ if(_vehicletype == "RHS_UH1Y_UNARMED" or _vehicletype == "RHS_UH1Y")then{
     _time = 600;
 };
 
-//Apache
-if(_vehicletype == "fza_ah64d_b2e")then{
+//Viper
+if(_vehicletype == "RHS_AH1Z_wd")then{
     _time = 1800;
 };
 
 //LittleBird
-if(_vehicletype == "MELB_AH6M_L")then{
+if(_vehicletype == "MELB_AH6M_M")then{
     _time = 1800;
 };
 
@@ -76,6 +76,7 @@ if(_vehicletype == "Burnes_MK10_1")then{
 
 //Ammo container
 if(_vehicletype == "B_Slingload_01_Ammo_F" or _vehicletype == "B_Slingload_01_Fuel_F" or _vehicletype == "B_Slingload_01_Medevac_F" or _vehicletype == "B_Slingload_01_Cargo_F" or _vehicletype == "B_Slingload_01_Repair_F" or _vehicletype == "B_CargoNet_01_ammo_F")then{
+    [_vehicle]spawn JOC_crateInit;
     _time = 300;
 };
 

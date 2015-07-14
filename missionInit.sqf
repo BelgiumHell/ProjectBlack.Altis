@@ -27,9 +27,10 @@ blackTowns      = ["Sagonisi","Ekali"];  //Blacklist towns
 airfieldMarkers = ["mrk_airfield_0","mrk_airfield_1","mrk_airfield_2","mrk_airfield_3","mrk_airfield_4"];   //Markers for airfields
 
 leaderArray = [cmd1,cmd2,a1,b1,c1,h1,r1,anv1,s1,v1,rip1];
+logisticsArray = [l1,l2,l3,l4];
 towableObjects = ["JS_JC_FA18E","JS_JC_FA18F"];
 jetArray = ["JS_JC_FA18E","JS_JC_FA18F"];
-radarTArray = ["JS_JC_FA18E","JS_JC_FA18F","","",""];
+radarTArray = ["JS_JC_FA18E","JS_JC_FA18F","RHS_UH1Y_UNARMED","RHS_UH1Y","B_Heli_Transport_03_unarmed_F","kyo_MH47E_H","RHS_AH1Z_wd","MELB_AH6M_M"];
 publicVariable "towableObjects";//Needs to be public since script runs locally
 
 //Init variables *DONT CHANGE*
