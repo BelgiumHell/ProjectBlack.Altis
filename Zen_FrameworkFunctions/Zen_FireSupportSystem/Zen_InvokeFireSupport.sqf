@@ -7,7 +7,7 @@
 #define RNG(ARR) ([(ARR select 0), (ARR select 1)] call Zen_FindInRange)
 
 _Zen_stack_Trace = ["Zen_InvokeFireSupport", _this] call Zen_StackAdd;
-private ["_firePosition", "_nameString", "_templateArray", "_roundType", "_round", "_guided", "_guidanceObject", "_guidanceType", "_artyVehicle", "_roundPosition", "_temp_roundsPerSalvo", "_temp_salvos", "_temp_timePerRound", "_temp_timePerSalvo", "_effectShapeData", "_temp_salvoDrift", "_artyVehicleClass", "_artyWeaponClass", "_effectMarker"];
+private ["_firePosition", "_nameString", "_templateArray", "_roundType", "_round", "_guided", "_guidanceObject", "_guidanceType", "_artyVehicle", "_roundPosition", "_temp_roundsPerSalvo", "_temp_salvos", "_temp_timePerRound", "_temp_timePerSalvo", "_effectShapeData", "_temp_salvoDrift", "_artyVehicleClass", "_artyMuzzleClass", "_effectMarker", "_artyWeaponMag", "_artyFireMode"];
 
 if !([_this, [["VOID"], ["STRING"], ["OBJECT"], ["STRING"]], [], 2] call Zen_CheckArguments) exitWith {
     call Zen_StackRemove;
@@ -15,6 +15,8 @@ if !([_this, [["VOID"], ["STRING"], ["OBJECT"], ["STRING"]], [], 2] call Zen_Che
 
 _firePosition = [(_this select 0)] call Zen_ConvertToPosition;
 _nameString = _this select 1;
+_guidanceObject = objNull;
+_guidanceType = "designator";
 
 _templateArray = [_nameString] call Zen_GetFireSupportData;
 
@@ -35,7 +37,6 @@ _guided = _templateArray select 7;
 
 if (_guided) then {
     _guidanceObject = _this select 2;
-    _guidanceType = "designator";
     if (count _this > 3) then {
         _guidanceType = toLower (_this select 3);
     };
@@ -54,8 +55,17 @@ for "_i" from 1 to RNG(_temp_salvos) do {
         sleep RNG(_temp_timePerRound);
         _roundPosition = [_effectMarker, _quantAngles] call Zen_FindPositionPoly;
 
-        if !([_roundType, ["Sh_155mm_AMOS", "Sh_82mm_AMOS", "R_230mm_HE"]] call Zen_ValueIsInArray) then {
-            _round = [_roundPosition, _roundType, 1000, 0, true] call Zen_SpawnVehicle;
+        if !([_roundType, ["Sh_155mm_AMOS", "Sh_82mm_AMOS", "R_230mm_HE", "smoke_120mm_amos", "mine_155mm_amos_range", "cluster_155mm_amos", "at_mine_155mm_amos_range", "flare_82mm_amos_white", "smoke_82mm_amos_white"]] call Zen_ValueIsInArray) then {
+            Zen_Fire_Support_Round_Local = objNull;
+            0 = [_roundPosition, _roundType, 1000, 0, true] spawn {
+                Zen_Fire_Support_Round_Local = _this call Zen_SpawnVehicle;
+            };
+
+            waitUntil {
+                !(isNull Zen_Fire_Support_Round_Local)
+            };
+
+            _round = Zen_Fire_Support_Round_Local;
             _round setVelocity [0, 0, -200];
             0 = _round spawn {
                 while {alive _this} do {
@@ -66,28 +76,71 @@ for "_i" from 1 to RNG(_temp_salvos) do {
             switch (toLower _roundType) do {
                 case "sh_155mm_amos": {
                     _artyVehicleClass = "B_MBT_01_arty_F";
-                    _artyWeaponClass = "mortar_155mm_amos";
+                    _artyMuzzleClass = "mortar_155mm_amos";
+                    _artyFireMode = "single1";
+                    _artyWeaponMag = "32rnd_155mm_mo_shells";
+                };
+                case "smoke_120mm_amos": {
+                    _artyVehicleClass = "B_MBT_01_arty_F";
+                    _artyMuzzleClass = "mortar_155mm_amos";
+                    _artyFireMode = "single1";
+                    _artyWeaponMag = "6rnd_155mm_mo_smoke";
+                };
+                case "mine_155mm_amos_range": {
+                    _artyVehicleClass = "B_MBT_01_arty_F";
+                    _artyMuzzleClass = "mortar_155mm_amos";
+                    _artyFireMode = "single1";
+                    _artyWeaponMag = "6rnd_155mm_mo_mine";
+                };
+                case "cluster_155mm_amos": {
+                    _artyVehicleClass = "B_MBT_01_arty_F";
+                    _artyMuzzleClass = "mortar_155mm_amos";
+                    _artyFireMode = "single3";
+                    _artyWeaponMag = "2rnd_155mm_mo_cluster";
+                };
+                case "at_mine_155mm_amos_range": {
+                    _artyVehicleClass = "B_MBT_01_arty_F";
+                    _artyMuzzleClass = "mortar_155mm_amos";
+                    _artyFireMode = "single4";
+                    _artyWeaponMag = "6rnd_155mm_mo_at_mine";
                 };
                 case "sh_82mm_amos": {
                     _artyVehicleClass = "B_Mortar_01_F";
-                    _artyWeaponClass = "mortar_82mm";
+                    _artyMuzzleClass = "mortar_82mm";
+                    _artyFireMode = "single1";
+                    _artyWeaponMag = "8rnd_82mm_mo_shells";
+                };
+                case "flare_82mm_amos_white": {
+                    _artyVehicleClass = "B_Mortar_01_F";
+                    _artyMuzzleClass = "mortar_82mm";
+                    _artyFireMode = "single1";
+                    _artyWeaponMag = "8rnd_82mm_mo_flare_white";
+                };
+                case "smoke_82mm_amos_white": {
+                    _artyVehicleClass = "B_Mortar_01_F";
+                    _artyMuzzleClass = "mortar_82mm";
+                    _artyFireMode = "single1";
+                    _artyWeaponMag = "8rnd_82mm_mo_smoke_white";
                 };
                 case "r_230mm_he": {
                     _artyVehicleClass = "B_MBT_01_mlrs_F";
-                    _artyWeaponClass = "rockets_230mm_gat";
+                    _artyMuzzleClass = "rockets_230mm_gat";
+                    _artyFireMode = "close";
+                    _artyWeaponMag = "12rnd_230mm_rockets";
                 };
             };
 
-            _artyVehicle = [([[0,0,0], 50 + random 100, random 360] call Zen_ExtendPosition), _artyVehicleClass, 100, 0, true] call Zen_SpawnVehicle;
+            _artyVehicle = [([[0,0,0], 50 + random 100, random 360] call Zen_ExtendPosition), _artyVehicleClass, 1000, 0, true] call Zen_SpawnVehicle;
             0 = [_artyVehicle] call Zen_SpawnVehicleCrew;
             hideObject _artyVehicle;
             _artyVehicle allowDamage false;
+            _artyVehicle setVelocity [0, 0, 200];
 
             Zen_Fire_Support_Round_Local = objNull;
             _artyVehicle addEventhandler ["fired", {
                 Zen_Fire_Support_Round_Local = _this select 6;
             }];
-            _artyVehicle fire _artyWeaponClass;
+            _artyVehicle fire [_artyMuzzleClass, _artyFireMode, _artyWeaponMag];
 
             waitUntil {
                 !(isNull Zen_Fire_Support_Round_Local)
@@ -101,16 +154,15 @@ for "_i" from 1 to RNG(_temp_salvos) do {
                     _this setVectorDirAndUp [[0, 0, -1], [0, 1, 0]];
                 };
             };
+
+            player commandChat str _round;
         };
 
         if (_guided) then {
-            if (_guidanceType == "designator") then {
-                if (local _guidanceObject) then {
-                    0 = [_round, _guidanceObject, _guidanceType] spawn Zen_GuideRound;
-                } else {
-                    Zen_MP_Closure_Packet = ["Zen_GuideRound", [_round, _guidanceObject, _guidanceType]];
-                    (owner _guidanceObject) publicVariableClient "Zen_MP_Closure_Packet";
-                };
+            if (isServer) then {
+                _round setOwner (owner _guidanceObject);
+                _args = [_round, _guidanceObject, _guidanceType];
+                ZEN_FMW_MP_REClient("Zen_GuideRound", _args, spawn, _guidanceObject)
             } else {
                 0 = [_round, _guidanceObject, _guidanceType] spawn Zen_GuideRound;
             };

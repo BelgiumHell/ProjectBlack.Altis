@@ -32,7 +32,7 @@ _avoidRanges = [];
         _avoidRanges = [[0, 360]];
     };
 
-    _tangentAngle = asin(_avoidDist / _distToAvoid);
+    _tangentAngle = asin _distAvoidRatio;
     _avoidRanges pushBack [_dirToAvoid - _tangentAngle, _dirToAvoid + _tangentAngle];
 } forEach _avoidPoints;
 

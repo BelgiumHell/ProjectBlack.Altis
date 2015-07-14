@@ -47,7 +47,7 @@ if (typeName _side == "SIDE") then {
     ZEN_STD_Parse_GetArgumentDefault(_sendPacket, 4, true)
 
     if (count _this < 3) then {
-        ZEN_FMW_Misc_Error("Zen_GiveLoadout", "Custom type requires custom loadouts")
+        ZEN_FMW_Code_Error("Zen_GiveLoadout", "Custom type requires custom loadouts")
     } else {
         0 = ([_units] + [_kits, _givingType, _sendPacket]) call Zen_GiveLoadoutCustom;
     };

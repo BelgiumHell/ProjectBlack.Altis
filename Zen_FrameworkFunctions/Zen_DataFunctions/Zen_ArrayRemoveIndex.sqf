@@ -16,6 +16,6 @@ for "_i" from _index to ((count _array) - 2) do {
     _array set [_i, (_array select (_i + 1))];
 };
 
-_array resize (count _array - 1);
+_array resize ((count _array - 1) max 0);
 call Zen_StackRemove;
 if (true) exitWith {};

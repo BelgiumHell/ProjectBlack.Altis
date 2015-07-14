@@ -3,7 +3,7 @@
 // See Legal.txt
 
 _Zen_stack_Trace = ["Zen_InvokeTaskClient", _this] call Zen_StackAdd;
-private ["_descriptionLong", "_descriptionShort", "_destination", "_isCurrent", "_nameString", "_task", "_units", "_localTaskArray", "_parentTaskLocal", "_parentTask", "_parentDataLocal", "_taskIndex", "_localTaskData"];
+private ["_descriptionLong", "_descriptionShort", "_destination", "_isCurrent", "_nameString", "_task", "_units", "_localTaskArray", "_parentTaskLocal", "_parentTask", "_parentDataLocal", "_taskIndex", "_localTaskData", "_taskIndexes"];
 
 if !([_this, [["ARRAY"], ["STRING"], ["STRING"], ["ARRAY"], ["BOOL"], ["STRING"], ["STRING"]], [["OBJECT"], [], [], ["SCALAR"]], 7] call Zen_CheckArguments) exitWith {
     call Zen_StackRemove;
@@ -66,10 +66,12 @@ _parentTaskLocal = taskNull;
 _localTaskData = [_nameString] call Zen_GetTaskDataLocal;
 
 if (count _localTaskData > 0) then {
-    _taskIndex = [Zen_Task_Array_Local, _nameString, 0] call Zen_ArrayGetNestedIndex;
+    _taskIndexes = [Zen_Task_Array_Local, _nameString, 0] call Zen_ArrayGetNestedIndex;
 
-    if (_taskIndex == -1) then {
+    if (count _taskIndexes == 0) then {
         _taskIndex = count Zen_Task_Array_Local;
+    } else {
+        _taskIndex = _taskIndexes select 0;
     };
 
     Zen_Task_Array_Local set [_taskIndex, [_nameString, ((_localTaskData select 1) + _localTaskArray)]];

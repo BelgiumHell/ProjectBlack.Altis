@@ -87,7 +87,7 @@ _vehicle move (getPosATL _vehicle);
 
 sleep 2;
 
-if (_cleanupEnd) then {
+if (_cleanupEnd && {(([_vehicle, _inPos] call Zen_Find2dDistance) < 25)}) then {
     ZEN_STD_OBJ_DeleteVehCrew(_vehicle);
 };
 

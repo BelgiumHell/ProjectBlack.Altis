@@ -46,6 +46,9 @@ switch (toLower _cmd) do {
     case "ordergetin": {
         (_args select 0) orderGetIn (_args select 1);
     };
+    case "setcaptive": {
+        (_args select 0) setCaptive (_args select 1);
+    };
     case "setdir": {
         (_args select 0) setDir (_args select 1);
     };

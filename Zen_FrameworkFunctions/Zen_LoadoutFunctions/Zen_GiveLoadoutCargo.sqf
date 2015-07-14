@@ -25,7 +25,7 @@
 #include "Zen_StandardLibrary.sqf"
 
 _Zen_stack_Trace = ["Zen_GiveLoadoutCargo", _this] call Zen_StackAdd;
-private ["_units", "_givenLoadoutArray", "_unit", "_loadout", "_gear", "_weaponsIndex", "_gearWeapons", "_randomWeaponArrays", "_randomMagCount", "_randomMag", "_magIndex", "_weaponsList", "_weaponArray", "_weapIndex"];
+private ["_units", "_givenLoadoutArray", "_unit", "_loadout", "_gear", "_weaponsIndexes", "_gearWeapons", "_randomWeaponArrays", "_randomMagCount", "_randomMag", "_magIndex", "_weaponsList", "_weaponArray", "_weapIndex"];
 
 if !([_this, [["ARRAY", "OBJECT"], ["ARRAY", "STRING"], ["BOOL"]], [["OBJECT"], ["STRING"]], 2] call Zen_CheckArguments) exitWith {
     call Zen_StackRemove;
@@ -75,9 +75,9 @@ ZEN_STD_Parse_ToArray(_units)
 
     _randomWeaponArrays = [];
     _randomMagCount = 0;
-    _weaponsIndex = [_loadout, "weapons", 0] call Zen_ArrayGetNestedIndex;
-    if (_weaponsIndex != -1) then {
-        _gearWeapons = _loadout select _weaponsIndex;
+    _weaponsIndexes = [_loadout, "weapons", 0] call Zen_ArrayGetNestedIndex;
+    if (count _weaponsIndexes != 0) then {
+        _gearWeapons = _loadout select (_weaponsIndexes select 0);
         _weaponsList = _gearWeapons select 1;
         _randomWeaponArrays = [_weaponsList, "ARRAY"] call Zen_ArrayGetType;
     } else {

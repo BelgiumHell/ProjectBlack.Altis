@@ -61,10 +61,10 @@ _crewGroupArray = [];
     _crewGroupArray pushBack (group driver _veh);
 
     if (typeName _movecenter == "String") then {
-        _mpos = [_movecenter, 0,_blackList, 2, 0, _limitAngles] call Zen_FindGroundPosition;
+        _mpos = [_movecenter, 0,_blackList, 2, 0, _limitAngles, 0, 0, 0, 0, 0, [1,-10,0]] call Zen_FindGroundPosition;
     } else {
         _vehDist = [_veh, _movecenter] call Zen_Find2dDistance;
-        _mpos = [_movecenter, [0, _maxx], [], 2, 0, _limitAngles, 0, [1, _veh, _vehDist]] call Zen_FindGroundPosition;
+        _mpos = [_movecenter, [0, _maxx], [], 2, 0, _limitAngles, 0, [1, _veh, _vehDist], 0, 0, 0, [1,-10,0]] call Zen_FindGroundPosition;
     };
 
     _veh move _mpos;
@@ -98,10 +98,10 @@ while {(count _vehicleArray != 0)} do {
                 if ([_veh] call Zen_IsReady) then {
                     _mpos = [0,0,0];
                     if (typeName _movecenter == "String") then {
-                        _mpos = [_movecenter, 0,_blackList, 2, 0, _limitAngles] call Zen_FindGroundPosition;
+                        _mpos = [_movecenter, 0,_blackList, 2, 0, _limitAngles, 0, 0, 0, 0, 0, [1,-10,0]] call Zen_FindGroundPosition;
                     } else {
                         _vehDist = [_veh, _movecenter] call Zen_Find2dDistance;
-                        _mpos = [_movecenter, [0, _maxx], [], 2, 0, _limitAngles, 0, [1, _veh, _vehDist]] call Zen_FindGroundPosition;
+                        _mpos = [_movecenter, [0, _maxx], [], 2, 0, _limitAngles, 0, [1, _veh, _vehDist], 0, 0, 0, [1,-10,0]] call Zen_FindGroundPosition;
                     };
 
                     _veh move _mpos;

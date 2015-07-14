@@ -24,7 +24,7 @@ ZEN_STD_Parse_GetArgumentDefault(_cleanup, 6, false)
 _insertionType = toLower _insertionType;
 
 if ((_insertionType == "parachute") && {!(_vehicle isKindOf "AIR")}) exitWith {
-    ZEN_FMW_Misc_ErrorExitVoid("Zen_OrderInsertion", "Given vehicle to parachute from cannot fly")
+    ZEN_FMW_Code_ErrorExitVoid("Zen_OrderInsertion", "Given vehicle to parachute from cannot fly")
 };
 
 if (typeName _posArray == "ARRAY") then {
@@ -84,10 +84,10 @@ _cargoSeats = ZEN_STD_OBJ_CountCargoSeats(_vehicle) + (count ([_vehicle, "cargoF
 
                     {
                         _args = ["unassignVehicle", [_x]];
-                        ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, _x)
+                        ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, call, _x)
 
                         _args = ["action", [_x, ["getOut", _vehicle]]];
-                        ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, _x)
+                        ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, call, _x)
 
                         _x enableAI "move";
                         sleep 1;
@@ -99,13 +99,13 @@ _cargoSeats = ZEN_STD_OBJ_CountCargoSeats(_vehicle) + (count ([_vehicle, "cargoF
 
             {
                 _args = ["orderGetIn", [[_x], false]];
-                ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, _x)
+                ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, call, _x)
 
                 _args = ["unassignVehicle", [_x]];
-                ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, _x)
+                ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, call, _x)
 
                 _args = ["leaveVehicle", [_x, _vehicle]];
-                ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, _x)
+                ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, call, _x)
 
                 _x enableAI "move";
             } forEach _units;
@@ -121,11 +121,11 @@ _cargoSeats = ZEN_STD_OBJ_CountCargoSeats(_vehicle) + (count ([_vehicle, "cargoF
                 _x addBackpackGlobal "b_parachute";
 
                 _args = ["unassignVehicle", [_x]];
-                ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, _x)
+                ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, call, _x)
 
                 if (isPlayer _x) then {
                     _args = ["action", [_x, ["eject", _vehicle]]];
-                    ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, _x)
+                    ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, call, _x)
                 } else {
                     _x setPosATL ((getPosATL _vehicle) vectorAdd [0,0,-5]);
                 };

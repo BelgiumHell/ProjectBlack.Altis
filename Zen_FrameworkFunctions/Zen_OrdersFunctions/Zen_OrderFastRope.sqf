@@ -107,11 +107,11 @@ _ropeGround = ropeCreate [_heli, _offsetL, _linkGround, [0,0,0], ZEN_STD_OBJ_ATL
     _ropeAir = ropeCreate [_heli, _offsetL, _linkAir, [0,0,0], 6];
 
     _args = ["unassignVehicle", [_x]];
-    ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, _x)
+    ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, call, _x)
 
     if (isPlayer _x) then {
         _args = ["action", [_x, ["eject", _heli]]];
-        ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, _x)
+        ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, call, _x)
     } else {
         _x setPosATL _groundPos;
     };
@@ -121,17 +121,17 @@ _ropeGround = ropeCreate [_heli, _offsetL, _linkGround, [0,0,0], ZEN_STD_OBJ_ATL
     };
 
     _args = ["setVectorUp", [_x, [0,0,1]]];
-    ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, _x)
+    ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, call, _x)
 
     _x attachTo [_linkAir, [0,-0.25,-0.5]];
     ropeUnwind [_ropeAir, 7, (_ropeStartPos select 2) + 3];
 
     sleep 0.5;
     _args = ["switchMove", [_x, "commander_apctracked3_out"]];
-    ZEN_FMW_MP_REAll("Zen_ExecuteCommand", _args)
+    ZEN_FMW_MP_REAll("Zen_ExecuteCommand", _args, call)
 
     _args = ["allowDamage", [_x, false]];
-    ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, _x)
+    ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, call, _x)
 
     waitUntil {
         sleep 0.25;
@@ -141,20 +141,20 @@ _ropeGround = ropeCreate [_heli, _offsetL, _linkGround, [0,0,0], ZEN_STD_OBJ_ATL
     detach _x;
 
     _args = ["unassignVehicle", [_x]];
-    ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, _x)
+    ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, call, _x)
 
     _args = ["setVectorUp", [_x, [0,0,1]]];
-    ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, _x)
+    ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, call, _x)
 
     _args = ["switchMove", [_x, ""]];
-    ZEN_FMW_MP_REAll("Zen_ExecuteCommand", _args)
+    ZEN_FMW_MP_REAll("Zen_ExecuteCommand", _args, call)
 
     ropeDestroy _ropeAir;
     deleteVehicle _linkAir;
     sleep 1;
 
     _args = ["allowDamage", [_x, true]];
-    ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, _x)
+    ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, call, _x)
 } forEach _units;
 
 sleep 1;

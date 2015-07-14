@@ -17,6 +17,21 @@
         _Zen_WeaponsArray = [_Zen_WeaponsArray, ZEN_FMW_ZAF_String(V)] call Zen_ArrayFilterCondition; \
     } forEach ["smoke", "horn", "laser", "flare", "throw", "put"];
 
+#define ZEN_FMW_Code_ErrorExitVoid(F, D) \
+    0 = [F, D, _this] call Zen_PrintError; \
+    call Zen_StackPrint; \
+    call Zen_StackRemove;
+
+#define ZEN_FMW_Code_ErrorExitValue(F, D, V) \
+    0 = [F, D, _this] call Zen_PrintError; \
+    call Zen_StackPrint; \
+    call Zen_StackRemove; \
+    V
+
+#define ZEN_FMW_Code_Error(F, D) \
+    0 = [F, D, _this] call Zen_PrintError; \
+    call Zen_StackPrint;
+
 #define ZEN_FMW_Code_GiveLoadoutsOrdered(U, L, S) \
     { \
         0 = [_x, S, (L select (_forEachIndex % (count L)))] call Zen_GiveLoadout; \
@@ -85,16 +100,16 @@
         (([A, B] call Zen_Find2dDistance) < D) \
     };
 
-#define ZEN_FMW_MP_REAll(F, A) \
+#define ZEN_FMW_MP_REAll(F, A, I) \
+    A I (missionNamespace getVariable F); \
     if (isMultiplayer) then { \
         Zen_MP_Closure_Packet = [F, A]; \
         publicVariable "Zen_MP_Closure_Packet"; \
-    }; \
-    A call (missionNamespace getVariable F);
+    };
 
-#define ZEN_FMW_MP_REClient(F, A, O) \
+#define ZEN_FMW_MP_REClient(F, A, I, O) \
     if (local O) then { \
-        A call (missionNamespace getVariable F); \
+        A I (missionNamespace getVariable F); \
     } else { \
         if (isMultiplayer) then { \
             Zen_MP_Closure_Packet = [F, A]; \
@@ -102,18 +117,18 @@
         }; \
     };
 
-#define ZEN_FMW_MP_RENonDedicated(F, A) \
+#define ZEN_FMW_MP_RENonDedicated(F, A, I) \
     if (isMultiplayer) then { \
         Zen_MP_Closure_Packet = [F, A]; \
         publicVariable "Zen_MP_Closure_Packet"; \
     }; \
     if !(isDedicated) then { \
-        A call (missionNamespace getVariable F); \
+        A I (missionNamespace getVariable F); \
     };
 
-#define ZEN_FMW_MP_REServerOnly(F, A) \
+#define ZEN_FMW_MP_REServerOnly(F, A, I) \
     if (isServer) then { \
-        A call (missionNamespace getVariable F); \
+        A I (missionNamespace getVariable F); \
     } else { \
         if (isMultiplayer) then { \
             Zen_MP_Closure_Packet = [F, A]; \
@@ -127,6 +142,14 @@
 #define ZEN_FMW_Math_DistLess3D(A, B, D) ((([A] call Zen_ConvertToPosition) distance ([B] call Zen_ConvertToPosition)) < D)
 #define ZEN_FMW_Math_RandomPoint(C, R) ([C, random R, random 360] call Zen_ExtendPosition)
 #define ZEN_FMW_Math_RandomPointMin(C, S, E) ([C, S + random abs (E - S), random 360] call Zen_ExtendPosition)
+
+#define ZEN_FMW_Math_TerrainParallelCart(P, I) \
+    _Zen_3dGradPolar = [1, [P] call Zen_FindTerrainGradient, 90 - ([P] call Zen_FindTerrainSlope)]; \
+    I = ZEN_STD_Math_VectPolarCart(_Zen_3dGradPolar);
+
+#define ZEN_FMW_Math_TerrainGradientCart(P, I) \
+    _Zen_2dGradCyl = [tan ([P] call Zen_FindTerrainSlope), [P] call Zen_FindTerrainGradient, 0]; \
+    I = ZEN_STD_Math_VectCylCart(_Zen_2dGradCyl);
 
 #define ZEN_FMW_OBJ_DeleteDead(D) \
     { \
@@ -143,21 +166,6 @@
             deleteVehicle _x; \
         }; \
     } forEach allDead;
-
-#define ZEN_FMW_Misc_ErrorExitVoid(F, D) \
-    0 = [F, D, _this] call Zen_PrintError; \
-    call Zen_StackPrint; \
-    call Zen_StackRemove;
-
-#define ZEN_FMW_Misc_ErrorExitValue(F, D, V) \
-    0 = [F, D, _this] call Zen_PrintError; \
-    call Zen_StackPrint; \
-    call Zen_StackRemove; \
-    V
-
-#define ZEN_FMW_Misc_Error(F, D) \
-    0 = [F, D, _this] call Zen_PrintError; \
-    call Zen_StackPrint;
 
 #define ZEN_FMW_ZAS_ArrayLength {if (count (_this select 0) < count (_this select 1)) exitWith {-1}; (if (count (_this select 0) == count (_this select 1)) then {0} else {1})}
 #define ZEN_FMW_ZAS_AlphaNumeric ({_2a = toArray (_this select 1); _c = 0; {if (_x < (_2a select _forEachIndex)) exitWith {_c = -1}; if (_x > (_2a select _forEachIndex)) exitWith {_c = 1};} forEach (toArray (_this select 0)); (_c)})

@@ -4,8 +4,8 @@
 
 #include "Zen_StandardLibrary.sqf"
 
-_Zen_stack_Trace = ["Zen_ArraySearch", _this] call Zen_StackAdd;
-private ["_arrays", "_indexes", "_ranges", "_hashes", "_counts", "_returnIndex", "_arrayIndex", "_array", "_checksPassed", "_element", "_range", "_hashFunc", "_elementHash", "_lowerBound", "_upperBound"];
+_Zen_stack_Trace = ["Zen_ArraySearch(", _this] call Zen_StackAdd;
+private ["_arrays", "_indexes", "_ranges", "_hashes", "_counts", "_returnIndexes", "_arrayIndex", "_array", "_checksPassed", "_element", "_range", "_hashFunc", "_elementHash", "_lowerBound", "_upperBound"];
 
 if !([_this, [["ARRAY"], ["ARRAY"], ["ARRAY"], ["ARRAY"]], [["ARRAY"], ["SCALAR"], ["ARRAY"], ["CODE", "STRING"]], 4] call Zen_CheckArguments) exitWith {
     call Zen_StackRemove;
@@ -22,7 +22,7 @@ _counts = [count _indexes, count _ranges, count _hashes];
 if (count _counts != 0) exitWith {
     0 = ["Zen_ArraySearch", "Given index, value range, and hash function arrays are different lengths.", _this] call Zen_PrintError;
     call Zen_StackRemove;
-    (-1)
+    ([])
 };
 
 {
@@ -31,7 +31,7 @@ if (count _counts != 0) exitWith {
     };
 } forEach _ranges;
 
-_returnIndex = -1;
+_returnIndexes = [];
 {
     _arrayIndex = _forEachIndex;
     _array = _x;
@@ -58,10 +58,10 @@ _returnIndex = -1;
         _checksPassed = _checksPassed + 1;
     } forEach _indexes;
 
-    if (_checksPassed == count _indexes) exitWith {
-        _returnIndex = _arrayIndex;
+    if (_checksPassed == count _indexes) then {
+        _returnIndexes pushBack _arrayIndex;
     };
 } forEach _arrays;
 
 call Zen_StackRemove;
-(_returnIndex)
+(_returnIndexes)

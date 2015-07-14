@@ -3,7 +3,7 @@
 // See Legal.txt
 
 _Zen_stack_Trace = ["Zen_RemoveFireSupport", _this] call Zen_StackAdd;
-private ["_fireSupportName", "_index"];
+private ["_fireSupportName", "_indexes"];
 
 if !([_this, [["STRING"]], [], 1] call Zen_CheckArguments) exitWith {
     call Zen_StackRemove;
@@ -11,15 +11,15 @@ if !([_this, [["STRING"]], [], 1] call Zen_CheckArguments) exitWith {
 
 _fireSupportName = _this select 0;
 
-_index = [Zen_Fire_Support_Array_Global, _fireSupportName, 0] call Zen_ArrayGetNestedIndex;
+_indexes = [Zen_Fire_Support_Array_Global, _fireSupportName, 0] call Zen_ArrayGetNestedIndex;
 
-if (_index == -1) exitWith {
+if (count _indexes == 0) exitWith {
     0 = ["Zen_RemoveFireSupport", "Given template does not exist", _this] call Zen_PrintError;
     call Zen_StackPrint;
     call Zen_StackRemove;
 };
 
-0 = [Zen_Fire_Support_Array_Global, _index] call Zen_ArrayRemoveIndex;
+0 = [Zen_Fire_Support_Array_Global, (_indexes select 0)] call Zen_ArrayRemoveIndex;
 publicVariable "Zen_Fire_Support_Array_Global";
 
 call Zen_StackRemove;

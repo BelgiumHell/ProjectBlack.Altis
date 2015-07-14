@@ -1,38 +1,26 @@
 author = "Jochem";
-OnLoadName = "Project Black";
+OnLoadName = "Project Black TEST";
 OnLoadMission = "A mission inspired by carrier ops and patrol ops. The goal is to capture Altis and complete random side objectives as you do so.";
 respawn = 3;
 respawndelay = 5;
-respawnOnStart = -1;
+respawnOnStart = 1;
 respawnVehicleDelay = 0;
 disabledAI = true;
 enableDebugConsole = 1;
 wreckManagerMode = 0;
 
-#include "Zen_FrameworkFunctions\Zen_LoadoutFunctions\Zen_LoadoutDialog.hpp"
-#include "CHVD\dialog.hpp"
-#include "R3F_LOG\desc_include.h"
-
-
-class CfgNotifications {
-    #include "Zen_FrameworkFunctions\Zen_TaskSystem\Zen_TaskNotifications.hpp"
-};
-
-class CfgCommunicationMenu {
-    #include "Zen_FrameworkFunctions\Zen_FireSupportSystem\Zen_FireSupportMenu.hpp"
-};
+corpseManagerMode = 1;
+corpseLimit = 50;
+corpseRemovalMinTime = 180;
+corpseRemovalMaxTime = 3600;
 
 class Header
 {
-	gameType = Coop; // MP misison type
-	minPlayers = 1; //min # of players the mission supports
-	maxPlayers = 50; //max # of players the mission supports
+    gameType = Coop; // MP misison type
+    minPlayers = 1; //min # of players the mission supports
+    maxPlayers = 50; //max # of players the mission supports
 };
 
-class CfgFunctions 
+class CfgFunctions
 {
-	#include "CHVD\CfgFunctions.hpp"
-	class gdsn {
-		#include "Functions\AI\rooftopStaticWeapons\functions.hpp"
-	};
-}; 
+};

@@ -19,7 +19,7 @@ _id = _object getVariable "Zen_LoadoutsDialogAction";
 player setVariable ["Zen_LoadoutsDialogObject", nil];
 _object setVariable ["Zen_LoadoutsDialogUser", nil];
 
-_index = [Zen_Loadout_Action_Array_Local, _id, 0] call Zen_ArrayGetNestedIndex;
+_index = ([Zen_Loadout_Action_Array_Local, _id, 0] call Zen_ArrayGetNestedIndex) select 0;
 _maxCount = (Zen_Loadout_Action_Array_Local select _index) select 1;
 _curCount = ((Zen_Loadout_Action_Array_Local select _index) select 2) + 1;
 

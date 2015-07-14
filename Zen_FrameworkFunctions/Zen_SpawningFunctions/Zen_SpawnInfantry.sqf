@@ -2,6 +2,8 @@
 // This file is released under Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)
 // See Legal.txt
 
+//Edited slighty by jochem
+
 #include "Zen_FrameworkLibrary.sqf"
 #include "Zen_StandardLibrary.sqf"
 

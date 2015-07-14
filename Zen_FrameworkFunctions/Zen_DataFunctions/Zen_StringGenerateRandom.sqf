@@ -43,7 +43,7 @@ switch (toLower _set) do {
 } forEach _characterLimits;
 
 if (count _chars == 0) exitWith {
-    ZEN_FMW_Misc_ErrorExitValue("Zen_StringGenerateRandom", "Invalid character set given", "")
+    ZEN_FMW_Code_ErrorExitValue("Zen_StringGenerateRandom", "Invalid character set given", "")
 };
 
 _string = [];

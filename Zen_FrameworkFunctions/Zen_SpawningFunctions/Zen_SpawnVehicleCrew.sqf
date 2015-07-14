@@ -66,11 +66,11 @@ switch (_side) do {
         _jetCrewClass = "b_pilot_f";
     };
     case east: {
-        _carCrewClass = "rhs_msv_emr_driver_armored";
-        _tankCrewClass = "rhs_msv_emr_combatcrew";
-        _heliPilotClass = "rhs_pilot_combat_heli";
-        _heliCrewClass = "rhs_pilot_transport_heli";
-        _jetCrewClass = "rhs_pilot";
+        _carCrewClass = "TEC_O_Soldier_Repair_F";
+        _tankCrewClass = "TEC_O_Crew_F";
+        _heliPilotClass = "TEC_O_Helipilot_F";
+        _heliCrewClass = "TEC_O_Helicrew_F";
+        _jetCrewClass = "TEC_O_Pilot_F";
     };
     case resistance: {
         _carCrewClass = "i_soldier_f";

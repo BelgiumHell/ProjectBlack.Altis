@@ -32,7 +32,7 @@ _center = _moveObjects call Zen_FindAveragePosition;
     if (typeName _x == "STRING") then {
         _x setMarkerPos _newPos;
     } else {
-        0 = [_x, _newPos, 0.2, 0, (getDir _x), true] call Zen_TransformObject;
+        0 = [_x, _newPos, (if (_x isKindOf "LandVehicle") then {(0.2)} else {(0)}), 0, (getDir _x), true] call Zen_TransformObject;
     };
 } forEach _moveObjects;
 

@@ -8,7 +8,7 @@
 #define RESET_MP_SYNCH_OBJ_VAR(U) \
     { \
         _args = ["setVariable", [_x, ["Zen_MoveInVehicle_IsSynchd_MP", 0, true]]]; \
-        ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, _x) \
+        ZEN_FMW_MP_REClient("Zen_ExecuteCommand", _args, call, _x) \
     } forEach U;
 
 #define WAITUNTIL_MP_RESET_SYNCH_OBJ_VAR(U) \
@@ -59,7 +59,7 @@ switch (toLower _vehicleSlot) do {
 
         {
             _args = [[_x], _vehicle, _turrets];
-            ZEN_FMW_MP_REClient("Zen_MoveInVehicle_Turret_MP", _args, _x)
+            ZEN_FMW_MP_REClient("Zen_MoveInVehicle_Turret_MP", _args, call, _x)
             WAITUNTIL_MP_MOVE_SYNCH_OBJ_VAR([_x])
         } forEach _unitsArray;
 
@@ -67,7 +67,7 @@ switch (toLower _vehicleSlot) do {
         if (count _unitsArray > 0) then {
             {
                 _args = [[_x], _vehicle];
-                ZEN_FMW_MP_REClient("Zen_MoveInVehicle_Cargo_MP", _args, _x)
+                ZEN_FMW_MP_REClient("Zen_MoveInVehicle_Cargo_MP", _args, call, _x)
                 WAITUNTIL_MP_MOVE_SYNCH_OBJ_VAR([_x])
             } forEach _unitsArray;
         };
@@ -79,13 +79,13 @@ switch (toLower _vehicleSlot) do {
         };
 
         _args = [(_unitsArray select 0), _vehicle];
-        ZEN_FMW_MP_REClient("Zen_MoveInVehicle_Driver_MP", _args, (_unitsArray select 0))
+        ZEN_FMW_MP_REClient("Zen_MoveInVehicle_Driver_MP", _args, call, (_unitsArray select 0))
     };
     case "turret": {
         _turrets = [_vehicle, _turretTypes] call Zen_GetTurretPaths;
         {
             _args = [[_x], _vehicle, _turrets];
-            ZEN_FMW_MP_REClient("Zen_MoveInVehicle_Turret_MP", _args, _x)
+            ZEN_FMW_MP_REClient("Zen_MoveInVehicle_Turret_MP", _args, call, _x)
             WAITUNTIL_MP_MOVE_SYNCH_OBJ_VAR([_x])
         } forEach _unitsArray;
     };
@@ -95,7 +95,7 @@ switch (toLower _vehicleSlot) do {
             WAITUNTIL_MP_RESET_SYNCH_OBJ_VAR([(_unitsArray select 0)])
 
             _args = [(_unitsArray select 0), _vehicle];
-            ZEN_FMW_MP_REClient("Zen_MoveInVehicle_Driver_MP", _args, (_unitsArray select 0))
+            ZEN_FMW_MP_REClient("Zen_MoveInVehicle_Driver_MP", _args, call, (_unitsArray select 0))
             WAITUNTIL_MP_MOVE_SYNCH_OBJ_VAR([(_unitsArray select 0)])
 
             _unitsArray = [_unitsArray, {(vehicle _this != _this)}] call Zen_ArrayFilterCondition;
@@ -107,7 +107,7 @@ switch (toLower _vehicleSlot) do {
 
                 {
                     _args = [[_x], _vehicle, _turrets];
-                    ZEN_FMW_MP_REClient("Zen_MoveInVehicle_Turret_MP", _args, _x)
+                    ZEN_FMW_MP_REClient("Zen_MoveInVehicle_Turret_MP", _args, call, _x)
                     WAITUNTIL_MP_MOVE_SYNCH_OBJ_VAR([_x])
                 } forEach _unitsArray;
 
@@ -115,7 +115,7 @@ switch (toLower _vehicleSlot) do {
                 if (count _unitsArray > 0) then {
                     {
                         _args = [[_x], _vehicle];
-                        ZEN_FMW_MP_REClient("Zen_MoveInVehicle_Cargo_MP", _args, _x)
+                        ZEN_FMW_MP_REClient("Zen_MoveInVehicle_Cargo_MP", _args, call, _x)
                         WAITUNTIL_MP_MOVE_SYNCH_OBJ_VAR([_x])
                     } forEach _unitsArray;
                 };

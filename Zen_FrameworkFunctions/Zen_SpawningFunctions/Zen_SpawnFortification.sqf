@@ -6,7 +6,7 @@
 #define FORT_CLASSES ["Land_BagBunker_Small_F", "Land_BagFence_Long_F", "Land_BagFence_Long_F", "Land_BagFence_Long_F", "Land_BagFence_Long_F", "Land_CncBarrierMedium_F", "Land_CncBarrierMedium_F", "Land_HBarrier_3_F", "Land_HBarrier_3_F", "Land_HBarrier_3_F"]
 
 _Zen_stack_Trace = ["Zen_SpawnFortification", _this] call Zen_StackAdd;
-private ["_center", "_distance", "_i", "_noMG", "_class", "_distanceError", "_spawnPos", "_direction", "_object", "_mgSpawnPos", "_size2d", "_phi", "_staticClass", "_staticWeapon"];
+private ["_center", "_distance", "_i", "_hasMG", "_class", "_distanceError", "_spawnPos", "_direction", "_object", "_mgSpawnPos", "_size2d", "_phi", "_staticClass", "_staticWeapon"];
 
 if !([_this, [["VOID"], ["SCALAR"], ["STRING"]], [], 2] call Zen_CheckArguments) exitWith {
     call Zen_StackRemove;
@@ -18,7 +18,8 @@ _distance = _this select 1;
 ZEN_STD_Parse_GetArgumentDefault(_staticClass, 2, "B_HMG_01_high_F")
 
 _i = 0;
-_noMG = true;
+_hasMG = false;
+_staticWeapon = objNull;
 
 while {_i < 352} do {
     _class = [FORT_CLASSES] call Zen_ArrayGetRandom;
@@ -34,8 +35,8 @@ while {_i < 352} do {
 
     _object = [_spawnPos, _class, 0, _direction, true] call Zen_SpawnVehicle;
 
-    if (_noMG && [_class, "Land_BagFence_Long_F"] call Zen_ValuesAreEqual) then {
-        _noMG = false;
+    if (!_hasMG && [_class, "Land_BagFence_Long_F"] call Zen_ValuesAreEqual) then {
+        _hasMG = true;
         _mgSpawnPos = [_object, 1.75, (_direction + 180), "compass"] call Zen_ExtendPosition;
         _staticWeapon = [_mgSpawnPos, _staticClass, 0, _direction, true] call Zen_SpawnVehicle;
     };
